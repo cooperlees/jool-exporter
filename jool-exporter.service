@@ -1,0 +1,17 @@
+[Unit]
+Description=Daemon to collect jool stats for prometheus
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/jool-exporter -p 6971
+Restart=on-failure
+# Limit to 3 restarts per 30 seconds
+RestartSec=5
+StartLimitInterval=30
+StartLimitBurst=3
+User=nobody
+AmbientCapabilities=CAP_NET_ADMIN
+
+[Install]
+WantedBy=multi-user.target
