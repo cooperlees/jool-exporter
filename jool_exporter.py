@@ -12,10 +12,10 @@ import time
 from io import StringIO
 from socket import getfqdn
 from subprocess import CompletedProcess, PIPE, run
-from typing import Dict, Generator, Union
+from typing import Generator, Union
 
-from prometheus_client.core import GaugeMetricFamily, REGISTRY
-from prometheus_client import start_http_server
+from prometheus_client.core import GaugeMetricFamily, REGISTRY  # type: ignore
+from prometheus_client import start_http_server  # type: ignore
 
 
 DEFAULT_PORT = 6971
@@ -47,12 +47,9 @@ class JoolCollector:
             )
             return
         elif not jool_data:
-            LOG.error(f"jool failed: No output returned")
+            LOG.error("jool failed: No output returned")
             return
 
-        # Stat,Value,Explanation
-        # JSTAT_RECEIVED4,90888279,""
-        # JSTAT_SUCCESS,2308148,"Successful translations. (Note: 'Successful translation' does not imply that the packet was actually delivered.)"
         for row in csv.reader(StringIO(jool_data)):
             yield self._handle_counter(
                 row[0].replace("JSTAT_", "").lower(),
