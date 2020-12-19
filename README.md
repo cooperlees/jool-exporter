@@ -140,7 +140,7 @@ Logs will by default go to journald
 
 ## Development
 
-We use Facebook's [ptr])https://github.com/facebookincubator/ptr) for testing.
+We use Facebook's [ptr](https://github.com/facebookincubator/ptr) for testing.
 
 - `pip install ptr`
 - `cd ,`  # This repo
