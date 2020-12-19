@@ -1,4 +1,10 @@
 # jool-exporter
+
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Actions Status](https://github.com/cooperlees/jool-exporter/workflows/ci/badge.svg)](https://github.com/cooperlees/jool-exporter/actions)
+[![PyPI](https://img.shields.io/pypi/v/jool-exporter)](https://pypi.org/project/jool-exporter/)
+[![Downloads](https://pepy.tech/badge/jool-exporter/week)](https://pepy.tech/project/jool-exporter/week)
+
 jool SIIT-DC + NAT64 stats prometheus exporter
 
 ## What is this?
