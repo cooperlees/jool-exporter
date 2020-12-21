@@ -10,15 +10,52 @@ jool SIIT-DC + NAT64 stats prometheus exporter
 ## What is this?
 
 jool-exporter is a prometheus exporter HTTP service that wraps `jool stats display`
-and reads the statistics at the time of the request into promerthues compatible 
+and reads the statistics at the time of the request into promerthues compatible
 format.
 
 - jool-exporter changes `JSTAT` prefix to `jool_` prefix for key names
 - We attach the explanation of each stat to the guages
 
+## Install
+
+From PyPI:
+
+- `pip install jool-exporter`
+
+From GitHub:
+
+- `pip install git+git://github.com/cooperlees/jool-exporter`
+
+## Running
+
+`jool` CLI needs `CAP_NET_ADMIN` capability in order to pull the statistics. Due to this,
+so does the jool-exporter process. It also need to ability to pass the capability to child
+processes.
+
+The process can also just run was `root`, but running things listening externally as `root`
+is a bad security process.
+
+### SystemD
+
+We have a [Systemd Service](jool-exporter.service) unit file commited to the repo that runs as nobody and passes the
+capability to all children process.
+- This is the recommended way to run the service
+
+#### SystemD install
+
+- `cp jool-exporter.service /etc/systemd/system`
+- `sudo systemctl daemon-reload`
+- `sudo systemctl enable jool-exporter`
+- `sudo systemctl start jool-exporter`
+
+Logs will by default go to journald
+
+- `journalctl -u jool-exporter [-f]`
+
 ## Example Return
 
 - curl http://localhost:6971/metrics
+
 ```prometheus
 cooper@home1:~$ curl http://localhost:6971/metrics
 # HELP python_gc_objects_collected_total Objects collected during gc
@@ -101,42 +138,9 @@ jool_type1pkt{hostname="home1.cooperlees.com"} 299.0
 jool_so_exists{hostname="home1.cooperlees.com"} 1.0
 ```
 
-## Install
+## Grafana Dashbaord Example
 
-From PyPI:
-
-- `pip install jool-exporter`
-
-From GitHub:
-
-- `pip install git+git://github.com/cooperlees/jool-exporter`
-
-## Running
-
-`jool` CLI needs `CAP_NET_ADMIN` capability in order to pull the statistics. Due to this,
-so does the jool-exporter process. It also need to ability to pass the capability to child
-processes.
-
-The process can also just run was `root`, but running things listening externally as `root`
-is a bad security process.
-
-### SystemD
-
-We have a [Systemd Service](jool-exporter.service) unit file commited to the repo that runs as nobody and passes the 
-capability to all children process.
-- This is the recommended way to run the service
-
-#### SystemD install
-
-- `cp jool-exporter.service /etc/systemd/system`
-- `sudo systemctl daemon-reload`
-- `sudo systemctl enable jool-exporter`
-- `sudo systemctl start jool-exporter`
-
-Logs will by default go to journald
-
-- `journalctl -u jool-exporter [-f]`
-
+![Grafana jool Dashboard Example](https://github.com/cooperlees/jool-exporter/blob/main/grafana_jool_example.png)
 
 ## Development
 
