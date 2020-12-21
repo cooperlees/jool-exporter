@@ -147,7 +147,7 @@ jool_so_exists{hostname="home1.cooperlees.com"} 1.0
 We use Facebook's [ptr](https://github.com/facebookincubator/ptr) for testing.
 
 - `pip install ptr`
-- `cd ,`  # This repo
+- `cd .`  # This repo
 - `ptr [-k]`
 
 It is driven by config in setup.py.
