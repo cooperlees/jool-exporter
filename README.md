@@ -32,6 +32,8 @@ From GitHub:
 so does the jool-exporter process. It also need to ability to pass the capability to child
 processes.
 
+- From version **4.1.5** jool will no longer require this capability to query stats
+
 The process can also just run was `root`, but running things listening externally as `root`
 is a bad security process.
 
