@@ -14,8 +14,8 @@ from socket import getfqdn
 from subprocess import CompletedProcess, PIPE, run
 from typing import Generator, Union
 
-from prometheus_client.core import GaugeMetricFamily, REGISTRY  # type: ignore
 from prometheus_client import start_http_server  # type: ignore
+from prometheus_client.core import GaugeMetricFamily, REGISTRY  # type: ignore
 
 
 DEFAULT_PORT = 6971
@@ -61,7 +61,15 @@ class JoolCollector:
         LOG.info(f"Collection finished in {run_time}s")
 
     def run_jool(self) -> Union[str, CompletedProcess]:
-        cmd = ["jool", "stats", "display", "--csv", "--no-headers", "--explain"]
+        cmd = [
+            "jool",
+            "stats",
+            "display",
+            "--csv",
+            "--no-headers",
+            "--explain",
+            "--all",
+        ]
         cp = run(cmd, stderr=PIPE, stdout=PIPE, encoding="utf8")
         if cp.returncode:
             return cp
