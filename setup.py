@@ -4,6 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from pathlib import Path
+
 from setuptools import setup
 
 
@@ -15,6 +16,7 @@ ptr_params = {
     "run_black": True,
     "run_mypy": True,
     "run_flake8": True,
+    "run_usort": True,
 }
 
 
@@ -31,7 +33,7 @@ def get_long_desc() -> str:
 
 setup(
     name="jool-exporter",
-    version="20.12.20",
+    version="21.6.15",
     description="Export `jool stats display` for prometheus",
     long_description=get_long_desc(),
     long_description_content_type="text/markdown",
