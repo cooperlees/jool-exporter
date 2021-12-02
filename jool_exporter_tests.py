@@ -17,7 +17,7 @@ jool_exporter.LOG = Mock()
 class TestJoolExporter(unittest.TestCase):
     def setUp(self) -> None:
         self.je = jool_exporter.JoolCollector()
-        self.je_ns = jool_exporter.JoolCollector('some_namespace')
+        self.je_ns = jool_exporter.JoolCollector("some_namespace")
 
     def test_handle_debug(self) -> None:
         self.assertFalse(jool_exporter._handle_debug(False))

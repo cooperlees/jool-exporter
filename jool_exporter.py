@@ -30,9 +30,7 @@ class JoolCollector:
     label_values = [HOSTNAME]
     namespace = None
 
-    def __init__(
-        self, namespace: str = None
-    ):
+    def __init__(self, namespace: str = None):
         if namespace:
             self.namespace = namespace
             self.labels.append("namespace")
