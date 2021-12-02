@@ -18,6 +18,7 @@ from prometheus_client import start_http_server  # type: ignore
 from prometheus_client.core import GaugeMetricFamily, REGISTRY  # type: ignore
 
 
+DEFAULT_NAMESPACE = None
 DEFAULT_PORT = 6971
 HOSTNAME = getfqdn()
 LOG = logging.getLogger(__name__)
@@ -26,6 +27,16 @@ LOG = logging.getLogger(__name__)
 class JoolCollector:
     key_prefix = "jool"
     labels = ["hostname"]
+    label_values = [HOSTNAME]
+    namespace = None
+
+    def __init__(
+        self, namespace: str = None
+    ):
+        if namespace:
+            self.namespace = namespace
+            self.labels.append("namespace")
+            self.label_values.append(namespace)
 
     def _handle_counter(
         self, category: str, value: float, explanation: str
@@ -33,7 +44,7 @@ class JoolCollector:
         desc = "jool metric" if not explanation else explanation
         key = f"{self.key_prefix}_{category}"
         g = GaugeMetricFamily(key, desc, labels=self.labels)
-        g.add_metric([HOSTNAME], value)
+        g.add_metric(self.label_values, value)
         return g
 
     def collect(self) -> Generator[GaugeMetricFamily, None, None]:
@@ -70,6 +81,13 @@ class JoolCollector:
             "--explain",
             "--all",
         ]
+        if self.namespace:
+            cmd = [
+                "ip",
+                "netns",
+                "exec",
+                self.namespace,
+            ] + cmd
         cp = run(cmd, stderr=PIPE, stdout=PIPE, encoding="utf8")
         if cp.returncode:
             return cp
@@ -93,6 +111,12 @@ def main() -> int:
         "-d", "--debug", action="store_true", help="Verbose debug output"
     )
     parser.add_argument(
+        "-n",
+        "--namespace",
+        default=DEFAULT_NAMESPACE,
+        help="Network namespace to use [Default = {DEFAULT_NAMESPACE}]",
+    )
+    parser.add_argument(
         "-p",
         "--port",
         type=int,
@@ -104,7 +128,7 @@ def main() -> int:
 
     LOG.info(f"Starting {sys.argv[0]}")
     start_http_server(args.port)
-    REGISTRY.register(JoolCollector())
+    REGISTRY.register(JoolCollector(args.namespace))
     LOG.info(f"jool prometheus exporter - listening on {args.port}")
     try:
         while True:
