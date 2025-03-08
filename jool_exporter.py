@@ -14,8 +14,9 @@ from socket import getfqdn
 from subprocess import CompletedProcess, PIPE, run
 from typing import Generator, Union
 
-from prometheus_client import start_http_server  # type: ignore
-from prometheus_client.core import GaugeMetricFamily, REGISTRY  # type: ignore
+from prometheus_client import start_http_server
+from prometheus_client.core import GaugeMetricFamily, REGISTRY
+from prometheus_client.registry import Collector
 
 
 DEFAULT_PORT = 6971
@@ -23,7 +24,7 @@ HOSTNAME = getfqdn()
 LOG = logging.getLogger(__name__)
 
 
-class JoolCollector:
+class JoolCollector(Collector):
     key_prefix = "jool"
     labels = ["hostname"]
 
