@@ -19,6 +19,7 @@ from prometheus_client.core import GaugeMetricFamily, REGISTRY
 from prometheus_client.registry import Collector
 
 
+DEFAULT_ADDR = "0.0.0.0"
 DEFAULT_PORT = 6971
 HOSTNAME = getfqdn()
 LOG = logging.getLogger(__name__)
@@ -91,6 +92,12 @@ def main() -> int:
         description="Export `jool stats display` for prometheus"
     )
     parser.add_argument(
+        "-a",
+        "--addr",
+        default=DEFAULT_ADDR,
+        help=f"Address to bind socket to [Default = {DEFAULT_ADDR}]",
+    )
+    parser.add_argument(
         "-d", "--debug", action="store_true", help="Verbose debug output"
     )
     parser.add_argument(
@@ -104,7 +111,7 @@ def main() -> int:
     _handle_debug(args.debug)
 
     LOG.info(f"Starting {sys.argv[0]}")
-    start_http_server(args.port)
+    start_http_server(args.port, args.addr)
     REGISTRY.register(JoolCollector())
     LOG.info(f"jool prometheus exporter - listening on {args.port}")
     try:
