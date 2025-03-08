@@ -33,7 +33,7 @@ def get_long_desc() -> str:
 
 setup(
     name="jool-exporter",
-    version="21.6.15",
+    version="25.3.8",
     description="Export `jool stats display` for prometheus",
     long_description=get_long_desc(),
     long_description_content_type="text/markdown",
@@ -47,8 +47,6 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
     ],
     python_requires=">=3.8",
     entry_points={"console_scripts": ["jool-exporter = jool_exporter:main"]},
