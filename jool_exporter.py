@@ -94,7 +94,7 @@ def main() -> int:
     parser.add_argument(
         "-a",
         "--addr",
-        default="0.0.0.0",
+        default=DEFAULT_ADDR,
         help=f"Address to bind socket to [Default = {DEFAULT_ADDR}]",
     )
     parser.add_argument(
