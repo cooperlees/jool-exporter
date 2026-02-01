@@ -19,6 +19,8 @@ from prometheus_client.core import GaugeMetricFamily, REGISTRY
 from prometheus_client.registry import Collector
 
 
+DEFAULT_CLI = "jool"
+DEFAULT_INSTANCE = "default"
 DEFAULT_ADDR = "0.0.0.0"
 DEFAULT_PORT = 6971
 HOSTNAME = getfqdn()
@@ -64,7 +66,8 @@ class JoolCollector(Collector):
 
     def run_jool(self) -> Union[str, CompletedProcess]:
         cmd = [
-            "jool",
+            DEFAULT_CLI,
+            f"-i {DEFAULT_INSTANCE}",
             "stats",
             "display",
             "--csv",
@@ -106,6 +109,18 @@ def main() -> int:
         type=int,
         default=DEFAULT_PORT,
         help=f"Port to run webserver on [Default = {DEFAULT_PORT}]",
+    )
+    parser.add_argument(
+        "-i",
+        "--instance",
+        default=DEFAULT_INSTANCE,
+        help=f"Instance to listen to [Default = {DEFAULT_INSTANCE}]",
+    )
+    parser.add_argument(
+        "-c",
+        "--cli",
+        default=DEFAULT_CLI,
+        help=f"Cli to use (for instance jool or jool_siit) [Default = {DEFAULT_CLI}]",
     )
     args = parser.parse_args()
     _handle_debug(args.debug)
