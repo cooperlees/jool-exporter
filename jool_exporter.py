@@ -12,7 +12,7 @@ import time
 from io import StringIO
 from socket import getfqdn
 from subprocess import CompletedProcess, PIPE, run
-from typing import Generator, Union, Dict, Optional
+from typing import Generator, Union
 
 from prometheus_client import start_http_server
 from prometheus_client.core import GaugeMetricFamily, REGISTRY
