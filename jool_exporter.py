@@ -12,7 +12,7 @@ import time
 from io import StringIO
 from socket import getfqdn
 from subprocess import CompletedProcess, PIPE, run
-from typing import Generator, Union
+from typing import Generator, Union, Dict, Optional
 
 from prometheus_client import start_http_server
 from prometheus_client.core import GaugeMetricFamily, REGISTRY
@@ -30,6 +30,11 @@ LOG = logging.getLogger(__name__)
 class JoolCollector(Collector):
     key_prefix = "jool"
     labels = ["hostname"]
+
+    def __init__(self, cli = '', instance = ''):
+        super().__init__()
+        self._cli = cli
+        self._instance = instance
 
     def _handle_counter(
         self, category: str, value: float, explanation: str
@@ -66,8 +71,8 @@ class JoolCollector(Collector):
 
     def run_jool(self) -> Union[str, CompletedProcess]:
         cmd = [
-            args.cli,
-            f"-i {args.instance}",
+            self._cli,
+            f"-i {self._instance}",
             "stats",
             "display",
             "--csv",
@@ -127,7 +132,7 @@ def main() -> int:
 
     LOG.info(f"Starting {sys.argv[0]}")
     start_http_server(args.port, args.addr)
-    REGISTRY.register(JoolCollector())
+    REGISTRY.register(JoolCollector(args.cli, args.instance))
     LOG.info(f"jool prometheus exporter - listening on {args.port}")
     try:
         while True:
