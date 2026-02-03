@@ -19,6 +19,8 @@ from prometheus_client.core import GaugeMetricFamily, REGISTRY
 from prometheus_client.registry import Collector
 
 
+DEFAULT_CLI = "jool"
+DEFAULT_INSTANCE = "default"
 DEFAULT_ADDR = "0.0.0.0"
 DEFAULT_PORT = 6971
 HOSTNAME = getfqdn()
@@ -28,6 +30,11 @@ LOG = logging.getLogger(__name__)
 class JoolCollector(Collector):
     key_prefix = "jool"
     labels = ["hostname"]
+
+    def __init__(self, cli = '', instance = ''):
+        super().__init__()
+        self._cli = cli
+        self._instance = instance
 
     def _handle_counter(
         self, category: str, value: float, explanation: str
@@ -64,7 +71,8 @@ class JoolCollector(Collector):
 
     def run_jool(self) -> Union[str, CompletedProcess]:
         cmd = [
-            "jool",
+            self._cli,
+            f"-i {self._instance}",
             "stats",
             "display",
             "--csv",
@@ -107,12 +115,24 @@ def main() -> int:
         default=DEFAULT_PORT,
         help=f"Port to run webserver on [Default = {DEFAULT_PORT}]",
     )
+    parser.add_argument(
+        "-i",
+        "--instance",
+        default=DEFAULT_INSTANCE,
+        help=f"Instance to listen to [Default = {DEFAULT_INSTANCE}]",
+    )
+    parser.add_argument(
+        "-c",
+        "--cli",
+        default=DEFAULT_CLI,
+        help=f"Cli to use (for instance jool or jool_siit) [Default = {DEFAULT_CLI}]",
+    )
     args = parser.parse_args()
     _handle_debug(args.debug)
 
     LOG.info(f"Starting {sys.argv[0]}")
     start_http_server(args.port, args.addr)
-    REGISTRY.register(JoolCollector())
+    REGISTRY.register(JoolCollector(args.cli, args.instance))
     LOG.info(f"jool prometheus exporter - listening on {args.port}")
     try:
         while True:
