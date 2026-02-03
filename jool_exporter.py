@@ -30,10 +30,9 @@ class JoolCollector(Collector):
     key_prefix = "jool"
     labels = ["hostname"]
 
-    def __init__(self, cli="", instance=""):
+    def __init__(self, args: argparse.Namespace):
         super().__init__()
-        self._cli = cli
-        self._instance = instance
+        self.args = args
 
     def _handle_counter(
         self, category: str, value: float, explanation: str
@@ -70,8 +69,8 @@ class JoolCollector(Collector):
 
     def run_jool(self) -> Union[str, CompletedProcess]:
         cmd = [
-            self._cli,
-            f"-i {self._instance}",
+            self.args.cli,
+            f"-i {self.args.instance}",
             "stats",
             "display",
             "--csv",
@@ -131,7 +130,7 @@ def main() -> int:
 
     LOG.info(f"Starting {sys.argv[0]}")
     start_http_server(args.port, args.addr)
-    REGISTRY.register(JoolCollector(args.cli, args.instance))
+    REGISTRY.register(JoolCollector(args))
     LOG.info(f"jool prometheus exporter - listening on {args.port}")
     try:
         while True:
