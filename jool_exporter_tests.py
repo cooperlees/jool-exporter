@@ -4,6 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 # coding=utf8
 
+import argparse
 import unittest
 from unittest.mock import Mock
 
@@ -15,7 +16,10 @@ jool_exporter.LOG = Mock()
 
 class TestJoolExporter(unittest.TestCase):
     def setUp(self) -> None:
-        self.je = jool_exporter.JoolCollector()
+        args = argparse.Namespace(
+            cli=jool_exporter.DEFAULT_CLI, instance=jool_exporter.DEFAULT_INSTANCE
+        )
+        self.je = jool_exporter.JoolCollector(args)
 
     def test_handle_debug(self) -> None:
         self.assertFalse(jool_exporter._handle_debug(False))
