@@ -18,7 +18,6 @@ from prometheus_client import start_http_server
 from prometheus_client.core import GaugeMetricFamily, REGISTRY
 from prometheus_client.registry import Collector
 
-
 DEFAULT_CLI = "jool"
 DEFAULT_INSTANCE = "default"
 DEFAULT_ADDR = "0.0.0.0"
@@ -31,7 +30,7 @@ class JoolCollector(Collector):
     key_prefix = "jool"
     labels = ["hostname"]
 
-    def __init__(self, cli = '', instance = ''):
+    def __init__(self, cli="", instance=""):
         super().__init__()
         self._cli = cli
         self._instance = instance

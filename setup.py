@@ -7,7 +7,6 @@ from pathlib import Path
 
 from setuptools import setup
 
-
 ptr_params = {
     "entry_point_module": "jool_exporter",
     "test_suite": "jool_exporter_tests",

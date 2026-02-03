@@ -9,7 +9,6 @@ from unittest.mock import Mock
 
 import jool_exporter
 
-
 # Turn off logging for unit tests - Comment out to enable
 jool_exporter.LOG = Mock()
 
