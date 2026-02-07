@@ -70,7 +70,7 @@ class JoolCollector(Collector):
     def run_jool(self) -> Union[str, CompletedProcess]:
         cmd = [
             self.args.cli,
-            f"-i {self.args.instance}",
+            f"--instance={self.args.instance}",
             "stats",
             "display",
             "--csv",
