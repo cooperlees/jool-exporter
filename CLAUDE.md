@@ -2,6 +2,14 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Setup
+
+Create a virtualenv and install the package in editable mode:
+```
+python3 -m venv --upgrade-deps /tmp/tj
+/tmp/tj/bin/pip install -e .
+```
+
 ## Commands
 
 **Run all tests + linting (primary CI workflow):**
@@ -12,20 +20,20 @@ ptr
 
 **Run tests only (without linting):**
 ```
-python -m unittest jool_exporter_tests
+/tmp/tj/bin/python -m unittest jool_exporter_tests
 ```
 
 **Run a single test:**
 ```
-python -m unittest jool_exporter_tests.TestJoolExporter.test_handle_debug
+/tmp/tj/bin/python -m unittest jool_exporter_tests.TestJoolExporter.test_handle_debug
 ```
 
 **Linting tools (run individually):**
 ```
-black jool_exporter.py jool_exporter_tests.py
-mypy jool_exporter.py
-flake8 jool_exporter.py
-usort format jool_exporter.py
+/tmp/tj/bin/black jool_exporter.py jool_exporter_tests.py
+/tmp/tj/bin/mypy jool_exporter.py
+/tmp/tj/bin/flake8 jool_exporter.py
+/tmp/tj/bin/usort format jool_exporter.py
 ```
 
 **Build package:**
