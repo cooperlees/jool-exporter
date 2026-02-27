@@ -32,7 +32,7 @@ def get_long_desc() -> str:
 
 setup(
     name="jool-exporter",
-    version="26.2.3",
+    version="26.2.27",
     description="Export `jool stats display` for prometheus",
     long_description=get_long_desc(),
     long_description_content_type="text/markdown",
