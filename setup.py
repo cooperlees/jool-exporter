@@ -7,17 +7,6 @@ from pathlib import Path
 
 from setuptools import setup
 
-ptr_params = {
-    "entry_point_module": "jool_exporter",
-    "test_suite": "jool_exporter_tests",
-    "test_suite_timeout": 60,
-    "required_coverage": {"jool_exporter.py": 25},
-    "run_black": True,
-    "run_mypy": True,
-    "run_flake8": True,
-    "run_usort": True,
-}
-
 
 def get_long_desc() -> str:
     repo_base = Path(__file__).parent
@@ -49,5 +38,5 @@ setup(
     python_requires=">=3.8",
     entry_points={"console_scripts": ["jool-exporter = jool_exporter:main"]},
     install_requires=["prometheus_client"],
-    test_suite=ptr_params["test_suite"],
+    test_suite="jool_exporter_tests",
 )

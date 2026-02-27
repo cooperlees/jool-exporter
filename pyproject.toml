@@ -1,3 +1,13 @@
 [build-system]
 requires = ["setuptools>=77.0.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.ptr]
+entry_point_module = "jool_exporter"
+test_suite = "jool_exporter_tests"
+test_suite_timeout = 60
+required_coverage = { "jool_exporter.py" = 25 }
+run_black = true
+run_mypy = true
+run_flake8 = true
+run_usort = true
