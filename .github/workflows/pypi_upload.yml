@@ -17,7 +17,7 @@ jobs:
 
     - name: Install latest pip, build, setuptools, twine + wheel
       run: |
-        python -m pip install --upgrade pip build setuptools twine wheel
+        python -m pip install --upgrade pip build setuptools "twine>=6.1.0" "packaging>=24.2" wheel
 
     - name: Build sdist & wheel
       run: |
