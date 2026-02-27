@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jool-exporter"
-version = "26.2.27.post2"
+version = "26.2.27.post3"
 description = "Export `jool stats display` for prometheus"
 readme = "README.md"
 license = "BSD-2-Clause"
