@@ -16,7 +16,7 @@ python3 -m venv --upgrade-deps /tmp/tj
 ```
 ptr
 ```
-`ptr` (Facebook's [Python Test Runner](https://github.com/facebookincubator/ptr)) installs dependencies, runs `unittest`, then runs `black`, `mypy`, `flake8`, and `usort`. Config is in `setup.py` under `ptr_params`.
+`ptr` (Facebook's [Python Test Runner](https://github.com/facebookincubator/ptr)) installs dependencies, runs `unittest`, then runs `black`, `mypy`, `flake8`, and `usort`. Config is in `pyproject.toml` under `[tool.ptr]`.
 
 **Run tests only (without linting):**
 ```
@@ -55,6 +55,6 @@ This is a single-file prometheus exporter (`jool_exporter.py`) with a correspond
 
 **CLI arguments:** `--addr` (bind address), `--port` (default 6971), `--instance` (jool instance name, default `"default"`), `--cli` (binary name, default `"jool"`), `--debug`.
 
-**Versioning:** CalVer (`YY.M.patch`), set in `setup.py`.
+**Versioning:** CalVer (`YY.M.patch`), set in `pyproject.toml`.
 
 **Coverage requirement:** 25% minimum on `jool_exporter.py` (enforced by `ptr`).

@@ -152,4 +152,4 @@ We use Facebook's [ptr](https://github.com/facebookincubator/ptr) for testing.
 - `cd .`  # This repo
 - `ptr [-k]`
 
-It is driven by config in setup.py.
+It is driven by config in pyproject.toml.

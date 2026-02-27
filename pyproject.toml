@@ -2,6 +2,30 @@
 requires = ["setuptools>=77.0.0"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "jool-exporter"
+version = "26.2.27.post2"
+description = "Export `jool stats display` for prometheus"
+readme = "README.md"
+license = "BSD-2-Clause"
+requires-python = ">=3.8"
+authors = [{ name = "Cooper Lees", email = "me@cooperlees.com" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = ["prometheus_client"]
+
+[project.urls]
+Homepage = "http://github.com/cooperlees/jool-exporter"
+
+[project.scripts]
+jool-exporter = "jool_exporter:main"
+
+[tool.setuptools]
+py-modules = ["jool_exporter"]
+
 [tool.ptr]
 entry_point_module = "jool_exporter"
 test_suite = "jool_exporter_tests"
