@@ -40,7 +40,7 @@ setup(
     url="http://github.com/cooperlees/jool-exporter",
     author="Cooper Lees",
     author_email="me@cooperlees.com",
-    license="BSD-3-Clause",
+    license="BSD-2-Clause",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3",
